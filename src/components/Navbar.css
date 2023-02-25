@@ -1,0 +1,36 @@
+.nav-item{
+    width: fit-content;
+    text-align: center;
+    margin: auto 10px;
+}
+
+.nav-left{
+    margin-right: auto;
+}
+
+.nav-item-left{
+    float: left;
+}
+
+.nav-item-right{
+    float: right;
+}
+
+.nav-item p{
+    margin: 0;
+}
+
+.nav-title{
+    margin: 0;
+    margin-right: 16px;
+    float: left;
+}
+
+.nav-bar{
+    width: 100%;
+    padding: 24px 200px;
+    display: flex;
+    align-items: center;
+    background-color:#2D2D37;
+    color: #fff;
+}
