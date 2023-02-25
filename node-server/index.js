@@ -9,7 +9,7 @@ const tradenow_dir = path.resolve(__dirname, '..');
 app.use('/static', express.static(path.join(tradenow_dir, 'public')));
 
 app.get("/", function(req,res){
-    console.log(tradenow_dir);
+    res.sendFile(tradenow_dir+'/public/index.html');
 })
 
 app.listen(3000, function(){
