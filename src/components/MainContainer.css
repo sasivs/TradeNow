@@ -1,0 +1,48 @@
+.main-container{
+    background-color: #2D2D37;
+    padding: 7rem 200px 1rem;
+    color: #fff;
+    font-family: "Nunito", sans-serif;
+}
+
+.typewriter{
+    font-weight: 900;
+}
+
+
+.typing-effect{
+    overflow: hidden;
+    border-right: .05em solid #464545;
+    white-space: nowrap;
+    margin: 0;
+    width: 0;
+    max-width: max-content;
+    animation: 4s typing-effect 4s steps(50,end) infinite,
+        blink-caret .5s step-end infinite;
+    display: inline-flex;
+    letter-spacing: 0.3rem;
+    color: #2D2D37;
+    background-color: #fff;
+    font-weight: 600;
+}
+
+@keyframes typing-effect {
+    0% {width:0}
+    80%{width:100%}
+    90%, 100% {width:0}
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: gray }
+  }
+
+.get-started-button{
+    padding-top: 2rem;
+}
+
+.border-button{
+    border: 0.1rem solid;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+}

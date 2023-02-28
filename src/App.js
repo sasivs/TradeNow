@@ -1,8 +1,12 @@
+import MainDiv from "./components/MainDiv";
 import MainNavbar from "./components/Navbar";
 
 function App(){
     return (
-        <MainNavbar/>
+        <div>
+            <MainNavbar/>
+            <MainDiv/>
+        </div>
     );
 }
 
