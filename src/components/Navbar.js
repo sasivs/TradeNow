@@ -9,12 +9,12 @@ function MainNavbar(){
         <div className='nav-bar'>
             <NavTitle title={'TradeNow'}/>
             <div className='nav-left'>
-                <NavItemLeft name={'Trade'}/>
-                <NavItemLeft name={'About us'}/>
+                <NavItemLeft link={"/trade"} name={'Trade'}/>
+                <NavItemLeft link={"/contact"} name={'About us'}/>
             </div>
             <div className='nav-right'>
-                <NavItemRight name={'Signup'}/>
-                <NavItemRight name={'Login'}/>
+                <NavItemRight link={"/signup"} name={'Signup'}/>
+                <NavItemRight link={"login"} name={'Login'}/>
             </div>
         </div>
     )

@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 function NavItemRight(props){
     return (
         <div className="nav-item nav-item-right">
-            <p>{props.name}</p>
+            <Link to={props.link}>{props.name}</Link>
         </div>
     )
 }
