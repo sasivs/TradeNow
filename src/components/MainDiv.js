@@ -37,13 +37,13 @@ function MainDiv(){
             </div>
             <div className="usage-container">
                 <div className="row">
-                    <div className="col">
+                    <div className="col usage-col">
                         <UsageCards src={eKYCImg} alt={'eKYC'} description={props.description[0]}/>
                     </div>
-                    <div className="col">
+                    <div className="col usage-col">
                         <UsageCards src={dematImg} alt={'demat-account'} description={props.description[1]}/>
                     </div>
-                    <div className="col">
+                    <div className="col usage-col">
                         <UsageCards src={tradeImg} alt={'trade'} description={props.description[2]}/>
                     </div>
                 </div>
