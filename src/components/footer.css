@@ -1,0 +1,38 @@
+.footer{
+    text-align: center;
+    background-color: #2D2D37;
+    color: #fff;
+    padding-top: 2rem;
+}
+
+.footer-title{
+    margin: auto auto 1rem;
+}
+
+.footer-description{
+    width: 70%;
+    margin: auto auto 2rem;
+}
+
+.footer-connect-icon{
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: inline-block;
+    margin: auto 0.5rem;
+    background-color: #fff;
+    vertical-align: middle;
+}
+
+.footer-connections > a{
+    text-decoration: none;
+}
+
+.footer-connect-icon > img{
+    width: 60%;
+    height: 60%;
+}
+
+.footer-copyright{
+    padding-bottom: 1rem;
+}
