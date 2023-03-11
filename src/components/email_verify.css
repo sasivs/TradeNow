@@ -1,0 +1,109 @@
+.side-container {
+    background-color: #2D2D37;
+}
+
+.side-head {
+    width: 70%;
+    margin: 12rem 5rem;
+}
+
+.title-head {
+    margin: auto 5rem;
+}
+
+.email-row {
+    width: 100%;
+    height: 100vh;
+    color: #fff;
+}
+
+.welcome-head {
+    margin: 3rem auto 3rem;
+}
+
+.form-container {
+    margin: auto 15rem;
+}
+
+.btn {
+    text-align: center;
+    border: 1px solid;
+    margin: 2rem auto;
+}
+
+.continue-btn {
+    background-color: #2D2D37;
+    color: #fff;
+}
+
+.continue-btn:hover {
+    background-color: #fff;
+    color: #2D2D37;
+    font-weight: 600;
+}
+
+.input {
+    border: none;
+    border-bottom: 0.1rem solid #6c757d;
+    height: 3rem;
+    color: #fff;
+    background-color: #2D2D37;
+    transition: all .2s ease;
+    width: 70%;
+}
+
+.input::placeholder{
+    color: ghostwhite;
+}
+
+.email-input:focus::placeholder{
+    color: grey;
+}
+
+.password-input:focus::placeholder{
+    color: grey;
+}
+
+.input:focus {
+    border: none;
+    border-bottom: 0.1rem solid #fff;
+    outline: none;
+    transition: all .2s ease;
+}
+
+.form-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    background-color: #2D2D37;
+    border-radius: 1rem;
+}
+
+.google-container {
+    width: 70%
+}
+
+.error-label {
+    color: crimson;
+    margin: 0;
+    font-size: small;
+}
+
+.password-helper-container {
+    position: relative;
+}
+
+.password-message {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.password-helper-container:hover .password-message {
+    display: block;
+}
