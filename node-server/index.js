@@ -1,17 +1,32 @@
 const express = require("express");
+const cors = require("cors");
+const { connectDB, sequelize } = require("./db");
+const bodyParser = require('body-parser');
 
 const app = express();
-
 const path = require("path");
 
-const tradenow_dir = path.resolve(__dirname, '..');
+connectDB(sequelize);
 
-app.use('/static', express.static(path.join(tradenow_dir, 'public')));
+const tradenow_dir = path.resolve(__dirname, "..");
 
-app.get("/", function(req,res){
-    res.sendFile(tradenow_dir+'/public/index.html');
-})
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.listen(3000, function(){
-    console.log("Server is active");
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use("/static", express.static(path.join(tradenow_dir, "public")));
+
+app.get("/home", (req, res) => {
+  console.log("here");
+});
+
+app.use("/api/auth", require("./routes/auth"));
+
+app.listen(3001, function () {
+  console.log("Server is listening at http://localhost:3001");
 });
