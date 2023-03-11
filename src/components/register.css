@@ -1,0 +1,71 @@
+.btn {
+    text-align: center;
+    border: 1px solid;
+    margin: 2rem auto;
+}
+
+.continue-btn {
+    background-color: #2D2D37;
+    color: #fff;
+}
+
+.continue-btn:hover {
+    background-color: #fff;
+    color: #2D2D37;
+    font-weight: 600;
+}
+
+.input {
+    border: none;
+    border-bottom: 0.1rem solid #6c757d;
+    height: 3rem;
+    color: #fff;
+    background-color: #2D2D37;
+    transition: all .2s ease;
+    width: 70%;
+}
+
+.input::placeholder{
+    color: ghostwhite;
+}
+
+.email-input:focus::placeholder{
+    color: grey;
+}
+
+.password-input:focus::placeholder{
+    color: grey;
+}
+
+.input:focus {
+    border: none;
+    border-bottom: 0.1rem solid #fff;
+    outline: none;
+    transition: all .2s ease;
+}
+
+.error-label {
+    color: crimson;
+    margin: 0;
+    font-size: small;
+}
+
+.password-helper-container {
+    position: relative;
+}
+
+.password-message {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.password-helper-container:hover .password-message {
+    display: block;
+}
