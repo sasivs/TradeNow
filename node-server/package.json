@@ -4,12 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
   },
   "author": "Sasi Bhushan VS",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "nodemon": "^2.0.20"
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.20",
+    "pg": "^8.10.0",
+    "sequelize": "^6.29.1"
   }
 }
