@@ -12,41 +12,41 @@ User.init({
   },
   first_name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   middle_name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   last_name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   dob: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
   },
   gender: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isIn: [["Male", "Female", "Other"]],
     },
   },
   pan: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   aadhar: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       len: [12, 12],
     },
   },
   mobile: {
     type: DataTypes.STRING,
-    allownull: false,
+    allownull: true,
     validate: {
       len: [10, 10],
     },
@@ -59,6 +59,13 @@ User.init({
       isEmail: true,
     },
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      min: 8,
+    }
+  },
   email_verified: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -66,7 +73,7 @@ User.init({
   },
   demat_num: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
     validate: {
       len: [16, 16],
