@@ -17,7 +17,7 @@ export const useInput = (validator) => {
     }
 
     return {
-        value: enteredValue, hasError, inputChangeHanlder, inputOnBlurHandler, message: message
+        value: enteredValue, hasError, isTouched, isValid, inputChangeHanlder, inputOnBlurHandler, message: message
     }
 }
 
