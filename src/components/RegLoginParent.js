@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import './regLoginParent.css'
 
 function RegLoginParent(props) {
@@ -11,15 +13,15 @@ function RegLoginParent(props) {
           <h3>{props.side_head[3]}</h3>
         </div>
         <div className="title-head">
-          <h1>{props.title}</h1>
+          <h1><Link to={"/"}>{props.title}</Link></h1>
         </div>
       </div>
       <div className="col form-container">
         <div className="welcome-head">
           <h2>Welcome to {props.title}</h2>
         </div>
-        <div className="google-container">
-          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div className="child-head">
+          <h3 className='child-title title'>{props.childTitle}</h3>
         </div>
         <props.childComponent/>
       </div>

@@ -18,18 +18,36 @@
 }
 
 .welcome-head {
-    margin: 3rem auto 3rem;
+    margin: auto auto 2rem;
+}
+
+.child-head{
+    margin: 1rem auto 3rem;
+}
+
+.child-title{
+    width: fit-content;
+    color: #2D2D37;
+    background-color: #fff;
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    font-family: "Nunito", sans-serif;
 }
 
 
 .form-container {
     margin: auto 15rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding: 2rem;
     background-color: #2D2D37;
     border-radius: 1rem;
 }
 
 .google-container {
     width: 70%
+}
+
+.title-head * a{
+    text-decoration: none;
+    color: inherit;
 }
