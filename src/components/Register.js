@@ -1,11 +1,14 @@
 import { useInput } from "../customHooks/useInput";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import "./register.css";
 import { useEffect, useState } from "react";
 
 function Register(props) {
+  useEffect(() => {
+    document.title = "Register";
+  }, []);
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return { isValid: regex.test(email), message: "" };
@@ -33,6 +36,7 @@ function Register(props) {
     isValid: emailIsValid,
     inputChangeHanlder: emailOnChangeHandler,
     inputOnBlurHandler: emailOnBlurHandler,
+    inputReset: emailReset,
   } = useInput(validateEmail);
 
   const {
@@ -41,6 +45,7 @@ function Register(props) {
     isValid: passwdIsValid,
     inputChangeHanlder: passwdOnChangeHandler,
     inputOnBlurHandler: passwdOnBlurHandler,
+    inputReset: passwdReset,
     message: passwdMessage,
   } = useInput(validatePasswd);
 
@@ -48,28 +53,57 @@ function Register(props) {
 
   const [formIsSubmitted, setFormIsSubmitted] = useState(false);
 
-  useEffect(()=>{
-    setFormIsValid(emailIsValid && passwdIsValid)
-    
+  const [userExists, setUserExists] = useState(false);
+
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
+
+  useEffect(() => {
+    setUserExists(false);
+  }, [emailInputHasError]);
+
+  useEffect(() => {
+    setFormIsValid(emailIsValid && passwdIsValid);
+    setFormIsSubmitted(false);
   }, [emailIsValid, passwdIsValid]);
 
-  const history = useHistory();
-  const navigate = (path) => history.push(path);
-  
+  useEffect(() => {
+    if (signUpSuccess) {
+      emailReset();
+      passwdReset();
+    }
+  }, [signUpSuccess]);
+
   const onFormSubmit = (event) => {
     event.preventDefault();
     emailOnBlurHandler();
     passwdOnBlurHandler();
+    setUserExists(false);
+    setSignUpSuccess(false);
     setFormIsSubmitted(true);
     if (formIsValid) {
-      console.log('Form is valid');
       axios
-        .post("http://localhost:3001/api/auth/emailverification", {
+        .post("http://localhost:3001/api/auth/user/exists", {
           email: emailEnteredValue,
-          password: passwdEnteredValue,
         })
         .then((res) => {
-          navigate("/");
+          if (!res.data.exists) {
+            axios
+              .post("http://localhost:3001/api/auth/signup", {
+                email: emailEnteredValue,
+                password: passwdEnteredValue,
+              })
+              .then((res) => {
+                if (res.data.success) {
+                  setSignUpSuccess(true);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            setUserExists(true);
+            setFormIsSubmitted(false);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -77,15 +111,20 @@ function Register(props) {
     } else {
       console.log("Errr");
     }
-    
   };
 
   return (
     <div>
+      {signUpSuccess && (
+        <p className="info-label">
+          Thank you registering. Please verify your email and
+          <Link to="/login">Login</Link>
+        </p>
+      )}
       <p className="error-label">
-          {formIsSubmitted && !formIsValid && "Please clear all form errors."}
+        {formIsSubmitted && !formIsValid && "Please clear all form errors."}
       </p>
-      <div className="email-form">
+      <div className="signup-form">
         <form onSubmit={onFormSubmit}>
           <input
             type={"email"}
@@ -98,6 +137,11 @@ function Register(props) {
 
           <p className="error-label">
             {emailInputHasError && "Please enter valid Email address"}
+          </p>
+          <p className="error-label">
+            {userExists &&
+              !emailInputHasError &&
+              "User with that email already exists"}
           </p>
           <br />
           <input
@@ -122,6 +166,9 @@ function Register(props) {
             value={"Continue"}
             className="continue-btn btn"
           />
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
         </form>
       </div>
     </div>
