@@ -16,8 +16,13 @@ export const useInput = (validator) => {
         setIsTouched(true);
     }
 
+    const inputReset = () => {
+        setEnteredValue('');
+        setIsTouched(false);
+    }
+
     return {
-        value: enteredValue, hasError, isTouched, isValid, inputChangeHanlder, inputOnBlurHandler, message: message
+        value: enteredValue, hasError, isTouched, isValid, inputChangeHanlder, inputOnBlurHandler, inputReset, message: message
     }
 }
 
