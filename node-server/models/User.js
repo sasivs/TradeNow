@@ -79,6 +79,10 @@ User.init(
       validate: {
         len: [16, 16],
       },
+    },
+    emailVerificationCode: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   },
   {
