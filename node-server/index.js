@@ -27,6 +27,8 @@ app.get("/home", (req, res) => {
 
 app.use("/api/auth", require("./routes/auth"));
 
+app.use("/api/stocks", require("./routes/stocks"));
+
 app.listen(3001, function () {
   console.log("Server is listening at http://localhost:3001");
 });
