@@ -59,7 +59,7 @@ if (process.argv.length > 2) {
     console.log(option);
     const syncOptions = {};
     syncOptions[option] = true;
-    sequelize
+    ResetPassword
       .sync(syncOptions)
       .then(() => {
         console.log("Reset Password table updated successfully");
@@ -69,7 +69,7 @@ if (process.argv.length > 2) {
       });
   }
 } else {
-  sequelize
+  ResetPassword
     .sync()
     .then(() => {
       console.log("Reset Password table created successfully");

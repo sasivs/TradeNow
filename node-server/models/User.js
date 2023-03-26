@@ -100,7 +100,7 @@ if (process.argv.length > 2) {
     console.log(option);
     const syncOptions = {};
     syncOptions[option] = true
-    sequelize
+    User
       .sync(syncOptions)
       .then(() => {
         console.log("User table updated successfully");
@@ -110,7 +110,7 @@ if (process.argv.length > 2) {
       });
   }
 } else {
-  sequelize
+  User
     .sync()
     .then(() => {
       console.log("User table created successfully");
