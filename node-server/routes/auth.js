@@ -8,8 +8,11 @@ const bcrypt = require("bcrypt");
 const { body, validationResult } = require("express-validator");
 
 const nodemailer = require("nodemailer");
+
 const crypto = require("crypto");
+
 const jwt = require("jsonwebtoken");
+
 const { Op } = require("sequelize");
 
 const fetchuser = require("../middleware/GetUser");
