@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { connectDB, sequelize } = require("./db");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
 const app = express();
 const path = require("path");
@@ -28,6 +28,8 @@ app.get("/home", (req, res) => {
 app.use("/api/auth", require("./routes/auth"));
 
 app.use("/api/stocks", require("./routes/stocks"));
+
+app.use("/api/users", require("./routes/users"));
 
 app.listen(3001, function () {
   console.log("Server is listening at http://localhost:3001");
