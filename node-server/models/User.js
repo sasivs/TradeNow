@@ -106,7 +106,7 @@ if (process.argv.length > 2) {
         console.log("User table updated successfully");
       })
       .catch((error) => {
-        console.error("User table is not created: ", error);
+        console.error("User table is not updated: ", error);
       });
   }
 } else {
