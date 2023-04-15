@@ -1,0 +1,224 @@
+.trading-chart-container, .statistics-chart-container{
+    padding: 0.5rem 5rem;
+}
+
+.dashboard-container{
+    padding: 2rem 2rem;
+    background-color: #2D2D37;
+    border-radius: 0.5rem;
+}
+
+#search-box-container{
+    margin-bottom: 1rem;
+}
+
+.stock-listing-card-container{
+    margin-left: 1rem;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #2D2D37;
+    color: #fff;
+}
+
+.stock-listing-card__header{
+    margin: 2rem auto 2rem;
+    text-align: center;
+}
+
+.stock-listing-card__header__title{
+    background-color: #fff;
+    color: #2D2D37;
+    width: fit-content;
+    display: inline-block;
+    border: 3px solid #fff;
+    border-radius: 0.5rem;
+}
+
+#stock-listing-card-table{
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+}
+
+#stock-listing-card-table * th, td{
+    border-bottom: 1px solid #fff;
+    width: 50%;
+    padding: 1rem;
+}
+
+#stock-listing-card-table * th{
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: normal;
+}
+
+#stock-listing-card-table * td{
+    color: #fff;
+    border-top: 0rem;
+    border-right: 0rem;
+    border-left: 0rem;
+    border-bottom: 1px solid #fff;
+}
+
+#stock-listing-card-table * tr{
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.user-statistics-container{
+    padding: 0.5rem 5rem;
+}
+
+
+.user-statistics-barchart-row{
+    padding: 2rem 2rem;
+    background-color: #2D2D37;
+    border-radius: 0.5rem;
+    height: 30rem;
+}
+
+.investments-card, .returns-card{
+    background-color: #ffffff1a;
+    margin: 2rem 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: #fff;
+}
+
+.investments-card * img{
+    width: 100%;
+    height: 100%
+}
+
+.returns-card * img{
+    width: 100%;
+    height: 100%
+}
+
+.summary-statistics-header{
+    margin: 2rem auto 2rem;
+    text-align: center;
+}
+
+.summary-statistics-header-title{
+    text-align: center;
+    display: inline-block;
+    background-color: #fff;
+    color: #2D2D37;
+}
+
+.trade-container{
+    margin: 2rem auto 3rem;
+    padding: 2rem 2rem;
+    background-color: #2D2D37;
+    border-radius: 0.5rem;
+}
+
+.form-dropdown-select:hover{
+    background-color: #fff;
+    color: #2D2D37;
+    font-weight: 500;
+}
+
+.form-dropdown-select:focus{
+    background-color: #2D2D37;
+    color: #fff;
+    border-color: #fff;
+}
+
+.form-dropdown-select{
+    margin-top: 0rem;
+    background-color: #2D2D37;
+    border-color: #fff;
+    width: 10rem;  
+    color: #fff; 
+    margin: 0rem auto auto;
+}
+
+.stock-data-container{
+    padding: 0.5rem 5rem;
+    color: #fff;
+    background-color: #2D2D37;
+    width: fit-content;
+    padding: 3rem 5rem 2rem;
+    margin: 0 auto;
+}
+
+.stock-data-table * th,td{
+    width: auto;
+    border: solid #fff;
+    padding: 1rem;
+}
+
+.stock-data-header{
+    margin: auto auto 2rem;
+}
+
+.trade-container * .col-3{
+    margin: 0rem auto auto;
+    text-align: center;
+}
+
+.buy-main-container, .sell-main-container{
+    margin: 3rem 5rem;
+    padding: 2rem 2rem;
+    background-color: #2D2D37;
+    color: #fff;
+    border-radius: 1rem;
+}
+
+.buy-stock-header-container, .sell-stock-header-container{
+    text-align: center;
+    margin: 1rem auto 3rem;
+}
+
+.header-label{
+    background-color: #fff;
+    color: #2D2D37;
+    width: fit-content;
+    margin: auto auto;
+    border: 3px solid #fff;
+    border-radius: 0.5rem;
+}
+
+.label{
+    width: fit-content;
+    margin: auto 0rem auto 8rem;
+    border: 1px solid #fff;
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+}
+
+.buy-now-container, .sell-now-container{
+    padding: 1rem;
+}
+
+.buy-now-details-container, .sell-now-details-container{
+    display: flex;
+    margin: 1.5rem auto;
+}
+
+.buy-now-details, .sell-now-details{
+    margin: auto auto;
+}
+
+.buy-form-container, .sell-form-container{
+    margin: auto auto;
+    padding: 0rem;
+    text-align: center;
+}
+
+.stock-quantity-input{
+    margin: auto auto;
+}
+
+.buy-btn, .sell-btn{
+    margin: auto auto;
+    background-color: #2D2D37;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.buy-btn:hover, .sell-btn:hover {
+    background-color: #fff;
+    color: #2D2D37;
+    font-weight: 600;
+}
