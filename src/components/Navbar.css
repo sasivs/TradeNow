@@ -2,10 +2,20 @@
     width: fit-content;
     text-align: center;
     margin: auto 10px;
+    color: rgba(255, 255, 255, 0.3)
+}
+
+.nav-item:hover{
+    color: #fff,
 }
 
 .nav-left{
     margin-right: auto;
+    display: flex;
+}
+
+.nav-right{
+    display: flex;
 }
 
 .nav-item-left{
@@ -38,4 +48,8 @@
 .nav-bar * a{
     text-decoration: none;
     color: inherit;
+}
+
+.active{
+    color: #fff;
 }

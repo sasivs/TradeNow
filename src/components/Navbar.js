@@ -1,20 +1,22 @@
 import NavTitle from './NavTitle';
 import NavItemLeft from './NavItemLeft';
 import NavItemRight from './NavItemRight'; 
+import { useLocation } from 'react-router-dom';
 
 import './Navbar.css'
 
 function MainNavbar(){
+    const location = useLocation();
     return (
         <div className='nav-bar'>
             <NavTitle title={'TradeNow'}/>
             <div className='nav-left'>
-                <NavItemLeft link={"/trade"} name={'Trade'}/>
-                <NavItemLeft link={"/contact"} name={'About us'}/>
+                <NavItemLeft active={location.pathname === '/trade'} link={"/trade"} name={'Trade'}/>
+                <NavItemLeft active={location.pathname === '/contact'} link={"/contact"} name={'About us'}/>
             </div>
             <div className='nav-right'>
-                <NavItemRight link={"/signup"} name={'Signup'}/>
-                <NavItemRight link={"login"} name={'Login'}/>
+                <NavItemRight active={location.pathname === '/signup'} link={"/signup"} name={'Signup'}/>
+                <NavItemRight active={location.pathname === '/login'} link={"login"} name={'Login'}/>
             </div>
         </div>
     )
