@@ -8,29 +8,15 @@ StockListing.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     symbol: { type: DataTypes.STRING, unique: true, allowNull: false },
-    name: { type: DataTypes.STRING, allowNull: false },
+    companyName: { type: DataTypes.STRING, allowNull: false },
+    securityName: { type: DataTypes.STRING, allowNull: false },
     exchange: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [["BSE", "NSE"]],
+        isIn: [["NASDAQ", "NYSE"]],
       },
     },
-    series: { type: DataTypes.STRING, allowNull: false },
-    dateOfListing: { type: DataTypes.DATEONLY },
-    paidUpValue: {
-      type: DataTypes.DOUBLE,
-      validate: {
-        min: 0,
-      },
-    },
-    faceValue: {
-      type: DataTypes.DOUBLE,
-      validate: {
-        min: 0,
-      },
-    },
-    ISIN: { type: DataTypes.STRING, unique: true },
     marketLot: {
       type: DataTypes.INTEGER,
       validate: {
