@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import loginContext from "../context/login/loginContext";
 
 import axios from "axios";
 
@@ -9,7 +10,9 @@ function Login(props) {
   useEffect(() => {
     document.title = "Login";
   }, []);
-  
+
+  const {login, updateLogin} = useContext(loginContext);
+
   const [emailEnteredValue, setEmailEnteredValue] = useState("");
 
   const [passwdEnteredValue, setPasswdEnteredValue] = useState("");
@@ -24,6 +27,8 @@ function Login(props) {
     setEmailEnteredValue(event.target.value);
   };
 
+  const history = useHistory();
+
   const [invalidLogin, setInvalidLogin] = useState(false);
 
   const onFormSubmit = (event) => {
@@ -35,13 +40,13 @@ function Login(props) {
         password: passwdEnteredValue,
       })
       .then((res) => {
-        console.log(res);
         if (res.data.success) {
           setEmailVerified(true);
-          console.log("logged in");
+          updateLogin(true);
+          localStorage.setItem("token", res.data.authtoken);
+          history.push("/user/home");
         } else {
-          console.log("Hi");
-          if(!res.data.verified){
+          if (!res.data.verified) {
             setEmailVerified(false);
             return;
           }
@@ -55,9 +60,7 @@ function Login(props) {
   return (
     <div>
       {!emailVerified && (
-        <p className="info-label">
-          Please verify your email address to login
-        </p>
+        <p className="info-label">Please verify your email address to login</p>
       )}
       <div className="login-form">
         <p className="error-label">{invalidLogin && "Invalid credentials"}</p>
