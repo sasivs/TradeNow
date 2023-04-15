@@ -111,7 +111,7 @@ router.post(
       .create({
         email: email,
         password: hashedPassword,
-        emailVerificationCode: uniqueToken
+        emailVerificationCode: uniqueToken,
       })
       .then((user) => {
         const mailOptions = {
@@ -153,7 +153,6 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array(), invalid: true });
     }
-    console.log(req.body);
     const email = req.body.email;
     const user = require("../models/User");
     const reqUser = await user.findOne({
@@ -231,6 +230,7 @@ router.post(
     const email = req.body.email;
     const password = req.body.password;
     const user = require("../models/User");
+    const session = require("../models/Session");
     user
       .findOne({
         where: {
@@ -241,8 +241,14 @@ router.post(
         if (!user) {
           return res.status(400).json({ success: false });
         }
-        if(!user.email_verified){
-          return res.status(200).json({ success: false, verified: false, message: "User has to verify email address" });
+        if (!user.email_verified) {
+          return res
+            .status(200)
+            .json({
+              success: false,
+              verified: false,
+              message: "User has to verify email address",
+            });
         }
         bcrypt
           .compare(password, user.dataValues.password)
@@ -256,7 +262,21 @@ router.post(
               },
             };
             const authtoken = jwt.sign(data, process.env.SECRET_KEY);
-            return res.json({ success: true, authtoken: authtoken });
+            session
+              .create({
+                user_id: user.id,
+                session_id: authtoken,
+                started_at: new Date(),
+                last_request: new Date(),
+              })
+              .then((sessionRow) => {
+                if (!sessionRow)
+                  return res
+                    .status(500)
+                    .json({ success: false, error: "Internal Server Error" });
+                console.log("Session created: ", sessionRow);
+                return res.json({ success: true, authtoken: authtoken });
+              });
           })
           .catch((error) => {
             console.log("Error: ", error);
@@ -347,7 +367,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array(), invalid: true });
     }
-    const newpassword = await bcrypt.hash(req.body.password, 10);;
+    const newpassword = await bcrypt.hash(req.body.password, 10);
     try {
       const user = require("../models/User");
       const resetPassword = require("../models/ResetPassword");
@@ -400,10 +420,14 @@ router.post(
   }
 );
 
-router.post("/emailVerification", [
-  body("email", "Enter a valid email address").custom((value) => {
-    return validateEmail(value);
-  })], async (req, res) => {
+router.post(
+  "/emailVerification",
+  [
+    body("email", "Enter a valid email address").custom((value) => {
+      return validateEmail(value);
+    }),
+  ],
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array(), success: false });
@@ -438,64 +462,101 @@ router.post("/emailVerification", [
                       <p>TradeNow</p>
                    </div> `;
     const user = require("../models/User");
-    user.update({
-      emailVerificationCode: uniqueToken
-    },{
-      where: {
-        email: email,
-      }
-    }).then(([nrows, rows]) => {
-      if (nrows === 0 || nrows >1) {
-        return res.status(400).json({ success: false });
-      }
-      const mailOptions = {
-        from: process.env.APP_GMAIL,
-        to: rows[0].email,
-        subject: "Email Verification",
-        html: htmlBody,
-      };
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log(error);
-          return res
-            .status(500)
-            .json({ error: "Error sending email", success: false });
-        } else {
-          console.log("Email sent: " + info.response);
-          return res.status(200).json({ success: true });
+    user
+      .update(
+        {
+          emailVerificationCode: uniqueToken,
+        },
+        {
+          where: {
+            email: email,
+          },
         }
+      )
+      .then(([nrows, rows]) => {
+        if (nrows === 0 || nrows > 1) {
+          return res.status(400).json({ success: false });
+        }
+        const mailOptions = {
+          from: process.env.APP_GMAIL,
+          to: rows[0].email,
+          subject: "Email Verification",
+          html: htmlBody,
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error);
+            return res
+              .status(500)
+              .json({ error: "Error sending email", success: false });
+          } else {
+            console.log("Email sent: " + info.response);
+            return res.status(200).json({ success: true });
+          }
+        });
+        return res.status(200).json({ success: true });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(500).json({ error: "Server error" });
       });
-      return res.status(200).json({ success: true });
-    }).catch((error)=>{
-      console.log(error);
-      return res.status(500).json({error:"Server error"});
-    })
-  })
+  }
+);
 
 router.get("/verifyEmail", async (req, res) => {
   const { token } = req.query;
   if (!token) {
-    return res.status(401).send({ error: "Please use a valid token" })
+    return res.status(401).send({ error: "Please use a valid token" });
   }
-  try{
+  try {
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const user = require("../models/User");
     const reqUser = await user.findOne({
       where: {
         email: data.email,
-        emailVerificationCode: data.token
-      }
+        emailVerificationCode: data.token,
+      },
     });
-    if(!reqUser){
-      return res.status(401).send({ error: "Please use a valid token" })
+    if (!reqUser) {
+      return res.status(401).send({ error: "Please use a valid token" });
     }
     reqUser.email_verified = true;
     await reqUser.save();
-    return res.status(200).json({msg: "Email is verified"});
+    return res.status(200).json({ msg: "Email is verified" });
+  } catch (error) {
+    return res.status(401).send({ error: "Please use a valid token" });
   }
-  catch(error){
-    return res.status(401).send({ error: "Please use a valid token" })
-  }
+});
+
+router.post("/user/logout", fetchuser, async (req, res) => {
+  const session = require("../models/Session");
+  session
+    .update(
+      {
+        ended_at: new Date(),
+      },
+      {
+        returning: true,
+        where: {
+          user_id: req.user.id,
+          session_id: req.headers["authtoken"],
+          ended_at: {
+            [Op.is]: null,
+          },
+        },
+      }
+    )
+    .then(([nrows, rows]) => {
+      if (nrows === 0 || nrows > 1) {
+        return res
+          .status(500)
+          .json({ success: false, error: "Please authenticate using a valid token" });
+      }
+      return res.status(200).json({success: true});
+    }).catch((error)=>{
+      console.error("Error: ", error);
+      return res.status(500).json({success: false, error: "Internal Server Error"});
+    });
 });
 
 module.exports = router;
