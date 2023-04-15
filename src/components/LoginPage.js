@@ -4,7 +4,7 @@ import RegLoginParent from "./RegLoginParent";
 function LoginPage(props) {
   props = {
     email: {
-      side_head: ["Buy, Sell,", "Invest,", "Learn, Analyze,", "Repeat"],
+      side_head: ["Buy, Sell", "Invest", "Learn, Analyze", "Repeat"],
       title: "TradeNow",
     },
     childComponent: Login,

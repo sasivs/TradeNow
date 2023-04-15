@@ -26,15 +26,15 @@
     width: 70%;
 }
 
-.input::placeholder{
+.input::placeholder {
     color: ghostwhite;
 }
 
-.email-input:focus::placeholder{
+.email-input:focus::placeholder {
     color: grey;
 }
 
-.password-input:focus::placeholder{
+.password-input:focus::placeholder {
     color: grey;
 }
 

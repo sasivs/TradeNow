@@ -6,14 +6,20 @@ function RegLoginParent(props) {
   return (
     <div className="row main-row">
       <div className="col-4 side-container">
-        <div className="side-head">
-          <h3>{props.side_head[0]}</h3>
-          <h3>{props.side_head[1]}</h3>
-          <h3>{props.side_head[2]}</h3>
-          <h3>{props.side_head[3]}</h3>
+        <div className="row"> 
+          <h2>
+            <div className="side-head slidingVertical">
+              <span>{props.side_head[0]}</span>
+              <span>{props.side_head[1]}</span>
+              <span>{props.side_head[2]}</span>
+              <span>{props.side_head[3]}</span>
+            </div>
+          </h2>
         </div>
-        <div className="title-head">
-          <h1><Link to={"/"}>{props.title}</Link></h1>
+        <div className="row">
+          <div className="title-head">
+            <h1><Link to={"/"}>{props.title}</Link></h1>
+          </div>
         </div>
       </div>
       <div className="col form-container">

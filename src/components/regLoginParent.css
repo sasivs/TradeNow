@@ -7,8 +7,73 @@
     margin: 12rem 5rem;
 }
 
+.slidingVertical {
+    display: inline;
+    /* text-indent: 15px; */
+}
+
+.slidingVertical span {
+    position: absolute;
+    top: 12rem;
+    left: 5rem;
+    opacity: 0;
+    animation-name: slide;
+    animation-duration: 12s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+
+.slidingVertical span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.slidingVertical span:nth-child(2) {
+    animation-delay: 3s;
+}
+
+.slidingVertical span:nth-child(3) {
+    animation-delay: 6s;
+}
+
+.slidingVertical span:nth-child(4) {
+    animation-delay: 9s;
+}
+
+
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    5% {
+        opacity: 0;
+        transform: translateY(0%);
+    }
+
+    25% {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+
+    30% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+span {
+    user-select: text;
+}
+
 .title-head {
-    margin: auto 5rem;
+    margin: 30rem 5rem 0rem;
 }
 
 .main-row {
@@ -21,11 +86,11 @@
     margin: auto auto 2rem;
 }
 
-.child-head{
+.child-head {
     margin: 1rem auto 3rem;
 }
 
-.child-title{
+.child-title {
     width: fit-content;
     color: #2D2D37;
     background-color: #fff;
@@ -47,7 +112,7 @@
     width: 70%
 }
 
-.title-head * a{
+.title-head * a {
     text-decoration: none;
     color: inherit;
 }
