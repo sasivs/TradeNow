@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .total {
+        text-align: right;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Invoice</h1>
+      <address>
+        <%= user.name %><br>
+        DematNumber: <%= user.DematNumber %><br>
+        <%= user.email %>
+      </address>
+      <p>
+        Invoice Key: <%= trade.hashKey %><br>
+        Date: <%= date %>
+      </p>
+    </header>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Company Name</th>
+            <th>Security Name</th>
+            <th># Stocks</th> 
+            <th>Buy/Sell</th>
+            <th>Price</th>
+            <th>Brokerage</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% items.forEach(function(item) { %>
+            <tr>
+              <td><%= item.companyName %></td>
+              <td><%= item.securityName %></td>
+              <td><%= item.nstocks %></td>
+              <td><%= item.type %></td>
+              <td><%= item.price %></td>
+              <td><%= item.brokerage %></td>
+              <td><%= item.total %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" class="total">Subtotal:</td>
+            <td>$<%= subtotal %></td>
+          </tr>
+          <tr>
+            <td colspan="3" class="total">Brokerage:</td>
+            <td>$<%= totalBrokerage %></td>
+          </tr>
+          <tr>
+            <td colspan="3" class="total">Total:</td>
+            <td>$<%= totalPrice %></td>
+          </tr>
+        </tfoot>
+      </table>
+    </main>
+  </body>
+</html>
