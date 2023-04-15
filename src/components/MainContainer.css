@@ -18,6 +18,10 @@ body{
     background-color: #767687;
 }
 
+.highlights-container{
+    padding: 3rem 5rem 3rem;
+    color: #fff;
+}
 .contact-container{
     margin: 7rem 200px;
     background-color: #454555;
@@ -78,4 +82,13 @@ body{
 
 .usage-col{
     margin: auto 1rem;
+}
+
+.highlights-col{
+    padding: 0;
+    padding-right: 1rem;
+}
+
+.highlights-container * .highlights-col:last-child{
+    padding-right: 0;
 }
