@@ -7,7 +7,6 @@ const { Op } = require("sequelize");
 const fetchuser = (req, res, next) => {
     const session = require("../models/Session");
     const token = req.headers['authtoken'];
-    console.log(token);
     if (!token) {
         return res.status(401).json({ error: "Please authenticate using a valid token" })
     }

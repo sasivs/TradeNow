@@ -17,6 +17,8 @@ const { Op } = require("sequelize");
 
 const fetchuser = require("../middleware/GetUser");
 
+const getUser = require("../middleware/GetUserDetailsNoLogin");
+
 const generateToken = () => {
   return crypto.randomBytes(20).toString("hex");
 };
@@ -361,7 +363,7 @@ router.post(
       return validatePasswd(value);
     }),
   ],
-  fetchuser,
+  getUser,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
