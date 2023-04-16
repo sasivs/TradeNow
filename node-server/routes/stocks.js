@@ -812,7 +812,7 @@ router.post('/requestCode', fetchuser, async (req,res)=>{
     });
     const htmlBody = `<div>
                       <p>Hi,</p>
-                      <p>We have received a request to carry out a ${req.body.trade_type} transaction involving ${req.body.symbol} securitie. The verification code for the transaction:</p>
+                      <p>We have received a request to carry out a ${req.body.trade_type} transaction involving ${req.body.symbol} security. The verification code for the transaction:</p>
                       <h2>${verificationCode}</h2>
                       <p>If you did not request this verification code, please reset your password and secure yourr account immediately.</p>
                       <p>Thank you,<br> TradeNow Team</p>
