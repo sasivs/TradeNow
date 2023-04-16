@@ -5,6 +5,7 @@ const fetch = require("node-fetch");
 const { sequelize } = require("../db");
 const crypto = require("crypto");
 const fetchuser = require("../middleware/GetUser");
+const checkCode = require("../middleware/CheckVerCode");
 const nodemailer = require("nodemailer");
 const { Op } = require("sequelize");
 const ejs = require("ejs");
@@ -455,7 +456,7 @@ router.get("/latestprice", async (req, res) => {
     });
 });
 
-router.post("/buyStocks", fetchuser, async (req, res) => {
+router.post("/buyStocks", [fetchuser, checkCode], async (req, res) => {
   await setTimeout(() => {}, 10000);
   console.log(req.body);
   let apicall = "http://localhost:3001/api/stocks/latestprice?symbol=";
@@ -602,7 +603,7 @@ router.post("/buyStocks", fetchuser, async (req, res) => {
     });
 });
 
-router.post("/sellStocks", fetchuser, async (req, res) => {
+router.post("/sellStocks", [fetchuser, checkCode], async (req, res) => {
   await setTimeout(() => {}, 10000);
   let latestPrice = 0;
   const stockListings = require("../models/StockListings");
@@ -790,5 +791,60 @@ router.get(
       });
   }
 );
+
+router.post('/requestCode', fetchuser, async (req,res)=>{
+  const user = require("../models/User");
+    const reqUser = await user.findOne({
+      where: {
+        id: req.user.id,
+      },
+    });
+    if (reqUser.length === 0) {
+      return res.status(400).json({ invalid: true });
+    }
+    const verificationCode = Math.floor(100000 + Math.random() * 900000);
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.APP_GMAIL,
+        pass: process.env.APP_GMAIL_PASSWORD,
+      },
+    });
+    const htmlBody = `<div>
+                      <p>Hi,</p>
+                      <p>We have received a request to carry out a ${req.body.trade_type} transaction involving ${req.body.symbol} securitie. The verification code for the transaction:</p>
+                      <h2>${verificationCode}</h2>
+                      <p>If you did not request this verification code, please reset your password and secure yourr account immediately.</p>
+                      <p>Thank you,<br> TradeNow Team</p>
+                      </div> `;
+    const tradeCodes = require("../models/TradeVerCodes");
+    tradeCodes.create({
+      user_id: reqUser.id,
+      code: verificationCode
+    }).then((row)=>{
+      const mailOptions = {
+        from: process.env.APP_GMAIL,
+        to: reqUser.dataValues.email,
+        subject: "Verification Code for transaction",
+        html: htmlBody,
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          return res
+            .status(500)
+            .json({ error: "Error sending email", success: false });
+        } else {
+          console.log("Email sent: " + info.response);
+          return res.status(200).json({ success: true });
+        }
+      });
+    }).catch((err) => {
+      console.log("Error in object creation: ", err);
+      return res
+        .status(500)
+        .json({ error: "Error in Trade Ver Codes", success: false });
+    });
+})
 
 module.exports = router;
