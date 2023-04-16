@@ -19,13 +19,19 @@ function Buy(props) {
   const [totalPrice, setTotalPrice] = useState("-");
   const [tradeStatus, setTradeStatus] = useState(true);
   const [tradeCompleted, setTradeCompleted] = useState(false);
+  const [buttonText, setButtonText] = useState("Request Code");
+  const [codeInputVisible, setCodeInputVisible] = useState(false);
+  const verificationCodeValidator = (code) => {
+    return code.length === 6;
+  }
+  const {value: verificationCode, inputChangeHanlder: verificationCodeOnChangeHandler} = useInput(verificationCodeValidator);
+  
   const nstocksValidator = (nstocks) => {
     return { isValid: nstocks >= stockDetails.marketLot, message: "" };
   };
   const {
     value: nstocks,
     isValid: nstocksIsValid,
-    hasError: nstocksHasError,
     inputChangeHanlder: nstocksOnChangeHandler,
     inputOnBlurHandler: nstocksOnBlurHandler,
   } = useInput(nstocksValidator);
@@ -102,26 +108,49 @@ function Buy(props) {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:3001/api/stocks/buyStocks", {
-        symbol: selectedSymbol.name,
-        nstocks: nstocks,
-      }, {
-        headers: {
-          authtoken: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        if (!res.data.success) {
-          setTradeStatus(false);
+    if(document.getElementById("formSubmit").value === "Buy"){
+      axios
+        .post("http://localhost:3001/api/stocks/buyStocks", {
+          symbol: selectedSymbol.name,
+          nstocks: nstocks,
+          code: verificationCode,
+        }, {
+          headers: {
+            authtoken: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          if (!res.data.success) {
+            setTradeStatus(false);
+            return;
+          }
+  
+          setTradeStatus(true);
+          setTradeCompleted(true);
+          setTimeout(() => {history.push("/user/home")}, 10000);
           return;
-        }
-
-        setTradeStatus(true);
-        setTradeCompleted(true);
-        setTimeout(() => {history.push("/user/home")}, 10000);
-        return;
-      });
+        });
+    }
+    else if(document.getElementById("formSubmit").value === "Request Code"){
+      axios
+        .post("http://localhost:3001/api/stocks/requestCode", {
+          symbol: selectedSymbol.name,
+          nstocks: nstocks,
+          type: "Buy",
+        }, {
+          headers: {
+            authtoken: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          if (!res.data.success) {
+            return;
+          }
+          setButtonText("Buy");
+          setCodeInputVisible(true);
+          return;
+        });
+    }
   };
 
   return (
@@ -210,10 +239,23 @@ function Buy(props) {
                         className="stock-quantity-input"
                       />
                     </div>
+                    {codeInputVisible && <><div className="buy-now-details-container">
+                      <label className="label">Verification Code</label>
+                      <input
+                        type="text"
+                        minLength={6}
+                        maxLength={6}
+                        value={verificationCode}
+                        onChange={verificationCodeOnChangeHandler}
+                        className="stock-quantity-input"
+                      />
+                    </div></>}
                     <br />
                     <input
+                      id="formSubmit"
                       type="submit"
-                      value={"Buy"}
+                      value={buttonText}
+                      name="Submit"
                       className="buy-btn btn"
                     />
                   </form>
