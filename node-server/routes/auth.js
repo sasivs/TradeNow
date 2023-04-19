@@ -256,7 +256,7 @@ router.post(
           .compare(password, user.dataValues.password)
           .then((result) => {
             if (!result) {
-              return res.status(400).json({ success: false });
+              return res.status(400).json({ success: false, password: false });
             }
             const data = {
               user: {
