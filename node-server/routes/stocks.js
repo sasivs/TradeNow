@@ -11,7 +11,6 @@ const { Op } = require("sequelize");
 const ejs = require("ejs");
 const fs = require("fs");
 const pdf = require("html-pdf");
-const { type } = require("os");
 
 const generateToken = () => {
   return crypto.randomBytes(20).toString("hex");
@@ -169,7 +168,7 @@ router.get("/user-statistics", fetchuser, async (req, res) => {
   await trade
     .findAll({
       attributes: [
-        [sequelize.literal('SUM("price")'), "investment"],
+        [sequelize.literal('SUM("price"*"nstocks")'), "investment"],
         [sequelize.fn("date_part", "month", sequelize.col('"time"')), "month"],
       ],
       where: {
@@ -197,7 +196,7 @@ router.get("/user-statistics", fetchuser, async (req, res) => {
   await trade
     .findAll({
       attributes: [
-        [sequelize.literal('SUM("price")'), "returns"],
+        [sequelize.literal('SUM("price"*"nstocks")'), "returns"],
         [sequelize.fn("date_part", "month", sequelize.col('"time"')), "month"],
       ],
       where: {
@@ -557,7 +556,7 @@ router.post("/buyStocks", [fetchuser, checkCode], async (req, res) => {
                     });
                     const htmlBody = `<div>
                                           <p>Dear user,</p>
-                                          <p>Your transaction was successful. Thank you for our platform!</p>
+                                          <p>Your transaction was successful. Thank you for using our platform!</p>
                                           <p>You can find the invoice for the transaction attached.</p>
                                         \n\n
                                         <p>Thank you,</p>
@@ -772,9 +771,9 @@ router.get(
   fetchuser,  async (req, res) => {
     let query = `select (select SUM("nstocks") from "Trades" where "buy"='true' and "user_id"=${
       req.user.id
-    }) - (select SUM("nstocks") from "Trades" where "buy"='false' and "user_id"=${
+    }) - max(coalesce((select SUM("nstocks") from "Trades" where "buy"='false' and "user_id"=${
       req.user.id
-    }) as "TotalStocks"`;
+    }), 0)) as "TotalStocks"`;
     sequelize
       .query(query)
       .then((results) => {
