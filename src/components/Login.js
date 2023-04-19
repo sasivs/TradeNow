@@ -54,6 +54,10 @@ function Login(props) {
           console.log("Invalid credetials");
           setInvalidLogin(true);
         }
+      }).catch((error)=>{
+        if (!error.passwordMatched){
+          setInvalidLogin(true);
+        }
       });
   };
 
